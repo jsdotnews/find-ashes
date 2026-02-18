@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Ashes Near Me | Ash Wednesday 2026</title>
+<meta name="description" content="Find Catholic churches near you for Ash Wednesday ashes. Enter your zip code or use your location to find Mass times and ash distribution.">
+<meta property="og:title" content="Find Ashes Near Me">
+<meta property="og:description" content="Locate Catholic churches for Ash Wednesday ashes near you.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple-deep: #2E1A47;
+    --purple-mid: #4A2D6B;
+    --purple-rich: #6B3FA0;
+    --purple-soft: #8B6AAF;
+    --purple-glow: rgba(139, 106, 175, 0.25);
+    --ash-dark: #1A1A1A;
+    --ash-warm: #3D3535;
+    --cream: #FAF7F2;
+    --cream-soft: #F0EBE3;
+    --warm-white: #FFFDF9;
+    --text-primary: #1C1618;
+    --text-secondary: #6B5E63;
+    --text-on-dark: #E8E0EC;
+    --text-on-dark-muted: #B8A8C4;
+    --gold-warm: #C49B4A;
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Figtree', -apple-system, sans-serif;
+    background: var(--purple-deep);
+    color: var(--text-on-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ======= HERO SECTION ======= */
+  .hero {
+    position: relative;
+    min-height: 52vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 40px;
+    overflow: hidden;
+    background: linear-gradient(
+      170deg,
+      #1A0E2E 0%,
+      var(--purple-deep) 30%,
+      var(--purple-mid) 70%,
+      #3D2160 100%
+    );
+  }
+
+  /* Subtle grain texture overlay */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    pointer-events: none;
+  }
+
+  /* Soft radial glow behind the cross */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(139, 106, 175, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ======= ASH SMUDGE CROSS ======= */
+  .ash-cross-container {
+    position: relative;
+    width: 100px;
+    height: 120px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: breatheIn 1s ease-out 0.3s forwards;
+  }
+
+  /* The cross made of ash smudges */
+  .ash-cross-container svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(139, 106, 175, 0.3));
+  }
+
+  .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    opacity: 0;
+    animation: breatheIn 1s ease-out 0.5s forwards;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-on-dark-muted);
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0;
+    animation: breatheIn 1s ease-out 0.7s forwards;
+  }
+
+  .date-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    padding: 7px 18px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+    opacity: 0;
+    animation: breatheIn 1s ease-out 0.9s forwards;
+  }
+
+  .date-pill .dot {
+    width: 5px;
+    height: 5px;
+    background: var(--purple-soft);
+    border-radius: 50%;
+  }
+
+  /* ======= SEARCH CARD ======= */
+  .search-wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    margin: -32px auto 0;
+    padding: 0 20px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 1.1s forwards;
+  }
+
+  .search-card {
+    background: var(--warm-white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.12),
+      0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .input-group {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    font-family: 'Figtree', sans-serif;
+    font-size: 1.05rem;
+    padding: 16px 18px;
+    padding-right: 130px;
+    background: var(--cream);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .search-input:focus {
+    border-color: var(--purple-rich);
+    box-shadow: 0 0 0 4px var(--purple-glow);
+  }
+
+  .search-input::placeholder {
+    color: #A89CA0;
+  }
+
+  .btn-find {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 11px 20px;
+    background: var(--purple-deep);
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+
+  .btn-find:hover { background: var(--purple-mid); }
+  .btn-find:active { transform: translateY(-50%) scale(0.97); }
+  .btn-find:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0;
+    color: #B8AEB2;
+    font-size: 0.82rem;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cream-soft);
+  }
+
+  .btn-location {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 14px;
+    background: transparent;
+    color: var(--purple-rich);
+    border: 1.5px solid var(--purple-rich);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-location:hover {
+    background: rgba(107, 63, 160, 0.06);
+  }
+
+  .btn-location:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-location svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ======= WELCOME NOTE ======= */
+  .welcome-note {
+    max-width: 520px;
+    margin: 16px auto 0;
+    padding: 0 20px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 1.3s forwards;
+  }
+
+  .welcome-inner {
+    text-align: center;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    font-size: 0.85rem;
+    color: var(--text-on-dark-muted);
+    line-height: 1.55;
+  }
+
+  .welcome-inner strong {
+    color: var(--text-on-dark);
+  }
+
+  /* ======= SCRIPTURE ======= */
+  .scripture {
+    max-width: 520px;
+    margin: 28px auto;
+    padding: 0 20px;
+    text-align: center;
+    opacity: 0;
+    animation: breatheIn 1s ease-out 1.5s forwards;
+  }
+
+  .scripture p {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-on-dark-muted);
+    line-height: 1.55;
+  }
+
+  .scripture cite {
+    display: block;
+    margin-top: 8px;
+    font-family: 'Figtree', sans-serif;
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--purple-soft);
+  }
+
+  /* ======= RESULTS ======= */
+  .results-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  .results-header {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .results-count {
+    font-size: 0.82rem;
+    color: var(--text-on-dark-muted);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  /* Loading */
+  .loading {
+    text-align: center;
+    padding: 48px 20px;
+  }
+
+  .loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--purple-soft);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  .loading-text {
+    color: var(--text-on-dark-muted);
+    font-size: 0.92rem;
+  }
+
+  /* Church Card */
+  .church-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 10px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    opacity: 0;
+    animation: cardReveal 0.5s ease-out forwards;
+  }
+
+  .church-card:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.12);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .church-name {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .distance-badge {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(139, 106, 175, 0.2);
+    color: var(--purple-soft);
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .church-address {
+    font-size: 0.85rem;
+    color: var(--text-on-dark-muted);
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 9px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-directions {
+    background: var(--purple-rich);
+    color: #fff;
+  }
+
+  .btn-directions:hover { background: var(--purple-soft); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-on-dark);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* Error */
+  .error-msg {
+    text-align: center;
+    padding: 18px 20px;
+    background: rgba(200, 80, 80, 0.12);
+    border: 1px solid rgba(200, 80, 80, 0.2);
+    border-radius: 12px;
+    color: #E8A0A0;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+
+  /* No results */
+  .no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-on-dark-muted);
+  }
+
+  .fallback-links {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fallback-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: var(--text-on-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  .fallback-link:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Tip note */
+  .tip-note {
+    text-align: center;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    font-size: 0.82rem;
+    color: var(--text-on-dark-muted);
+    line-height: 1.5;
+    margin-top: 16px;
+  }
+
+  .tip-note strong {
+    color: var(--text-on-dark);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 28px 20px 48px;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.6;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  footer a {
+    color: var(--purple-soft);
+    text-decoration: none;
+  }
+
+  /* ======= ANIMATIONS ======= */
+  @keyframes breatheIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ======= MOBILE ======= */
+  @media (max-width: 480px) {
+    .search-input { padding-right: 18px; font-size: 1rem; }
+    .btn-find {
+      position: static;
+      transform: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 12px;
+    }
+    .btn-find:active { transform: scale(0.97); }
+    .input-group { display: flex; flex-direction: column; }
+    .card-actions { flex-direction: column; }
+    .card-btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="ash-cross-container">
+    <!-- SVG ash smudge cross -->
+    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="smudge" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="2" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <radialGradient id="ashGrad" cx="50%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#5A4A5A" stop-opacity="0.95"/>
+          <stop offset="50%" stop-color="#3D3035" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#2A2025" stop-opacity="0.6"/>
+        </radialGradient>
+      </defs>
+      <!-- Ash smudge background glow -->
+      <ellipse cx="50" cy="55" rx="38" ry="42" fill="rgba(139,106,175,0.08)" filter="url(#glow)"/>
+      <!-- Vertical stroke - imperfect, organic -->
+      <path d="M 48 8 C 46 20, 52 35, 49 55 C 47 75, 53 95, 50 112"
+            stroke="url(#ashGrad)" stroke-width="18" stroke-linecap="round"
+            fill="none" filter="url(#smudge)" opacity="0.9"/>
+      <!-- Horizontal stroke -->
+      <path d="M 18 38 C 28 36, 38 40, 50 38 C 62 36, 72 40, 82 37"
+            stroke="url(#ashGrad)" stroke-width="16" stroke-linecap="round"
+            fill="none" filter="url(#smudge)" opacity="0.85"/>
+      <!-- Extra ash particles / texture dots -->
+      <circle cx="35" cy="28" r="2.5" fill="#4A3A4A" opacity="0.3" filter="url(#smudge)"/>
+      <circle cx="68" cy="45" r="2" fill="#4A3A4A" opacity="0.25" filter="url(#smudge)"/>
+      <circle cx="42" cy="78" r="3" fill="#4A3A4A" opacity="0.2" filter="url(#smudge)"/>
+      <circle cx="58" cy="92" r="2" fill="#4A3A4A" opacity="0.15" filter="url(#smudge)"/>
+      <circle cx="30" cy="50" r="1.5" fill="#4A3A4A" opacity="0.2" filter="url(#smudge)"/>
+    </svg>
+  </div>
+
+  <h1 class="hero-title">Find Ashes<br>Near You</h1>
+  <p class="hero-subtitle">Locate a church for Ash Wednesday</p>
+  <span class="date-pill">
+    <span class="dot"></span>
+    February 18, 2026
+  </span>
+</section>
+
+<!-- ======= SEARCH ======= -->
+<div class="search-wrap">
+  <div class="search-card">
+    <div class="input-group">
+      <input
+        type="text"
+        class="search-input"
+        id="zipInput"
+        placeholder="Enter your zip code"
+        maxlength="5"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        aria-label="Zip code"
+      >
+      <button class="btn-find" id="searchBtn" onclick="searchByZip()">Find Churches</button>
+    </div>
+    <div class="divider">or</div>
+    <button class="btn-location" id="locationBtn" onclick="searchByLocation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/>
+      </svg>
+      Use My Location
+    </button>
+  </div>
+</div>
+
+<!-- ======= WELCOME ======= -->
+<div class="welcome-note">
+  <div class="welcome-inner">
+    <strong>Everyone is welcome to receive ashes.</strong><br>
+    You don't need to be Catholic or a parish member. Just walk up when it's time.
+  </div>
+</div>
+
+<!-- ======= SCRIPTURE ======= -->
+<div class="scripture">
+  <p>"Remember that you are dust,<br>and to dust you shall return."</p>
+  <cite>Genesis 3:19</cite>
+</div>
+
+<!-- ======= RESULTS ======= -->
+<div class="results-wrap" id="results"></div>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+  Call ahead or check parish websites to confirm Ash Wednesday times.
+</footer>
+
+<script>
+  document.getElementById('zipInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') searchByZip();
+  });
+
+  async function searchByZip() {
+    const zip = document.getElementById('zipInput').value.trim();
+    if (!/^\d{5}$/.test(zip)) {
+      showError('Please enter a valid 5-digit zip code.');
+      return;
+    }
+    showLoading();
+    try {
+      const geoRes = await fetch(
+        `https://nominatim.openstreetmap.org/search?postalcode=${zip}&country=US&format=json&limit=1`,
+        { headers: { 'User-Agent': 'FindAshesNearMe/1.0' } }
+      );
+      const geoData = await geoRes.json();
+      if (!geoData?.length) {
+        showError("Couldn't find that zip code. Please try again.");
+        return;
+      }
+      await findChurches(parseFloat(geoData[0].lat), parseFloat(geoData[0].lon));
+    } catch (err) {
+      showError('Something went wrong. Please try again.');
+      console.error(err);
+    }
+  }
+
+  async function searchByLocation() {
+    if (!navigator.geolocation) {
+      showError('Geolocation is not supported by your browser.');
+      return;
+    }
+    const btn = document.getElementById('locationBtn');
+    btn.disabled = true;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Getting location...`;
+    showLoading();
+    navigator.geolocation.getCurrentPosition(
+      async pos => {
+        resetLocationBtn(btn);
+        await findChurches(pos.coords.latitude, pos.coords.longitude);
+      },
+      err => {
+        resetLocationBtn(btn);
+        showError("Couldn't get your location. Please enter a zip code instead.");
+        console.error(err);
+      },
+      { enableHighAccuracy: false, timeout: 10000 }
+    );
+  }
+
+  function resetLocationBtn(btn) {
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Use My Location`;
+  }
+
+  async function findChurches(lat, lon) {
+    try {
+      const radius = 16000;
+      const query = `[out:json][timeout:15];(nwr["amenity"="place_of_worship"]["denomination"="catholic"](around:${radius},${lat},${lon});nwr["amenity"="place_of_worship"]["religion"="christian"]["denomination"="roman_catholic"](around:${radius},${lat},${lon}););out center body;`;
+      const res = await fetch('https://overpass-api.de/api/interpreter', {
+        method: 'POST',
+        body: `data=${encodeURIComponent(query)}`
+      });
+      const data = await res.json();
+      if (!data.elements?.length) {
+        showFallback(lat, lon);
+        return;
+      }
+      const churches = data.elements
+        .map(el => {
+          const eLat = el.lat || el.center?.lat;
+          const eLon = el.lon || el.center?.lon;
+          if (!eLat || !eLon) return null;
+          const t = el.tags || {};
+          return {
+            name: t.name || t['name:en'] || 'Catholic Church',
+            phone: t.phone || t['contact:phone'] || null,
+            website: t.website || t['contact:website'] || null,
+            address: buildAddr(t),
+            lat: eLat, lon: eLon,
+            distance: haversine(lat, lon, eLat, eLon)
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 15);
+      renderResults(churches);
+    } catch (err) {
+      showError('Could not search for churches. Please try again.');
+      console.error(err);
+    }
+  }
+
+  function renderResults(churches) {
+    const el = document.getElementById('results');
+    if (!churches.length) { el.innerHTML = ''; return; }
+
+    let html = `<div class="results-header">Churches Near You</div>`;
+    html += `<div class="results-count">${churches.length} Catholic ${churches.length === 1 ? 'church' : 'churches'} found within 10 miles</div>`;
+
+    churches.forEach((c, i) => {
+      const mi = c.distance.toFixed(1);
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lon}`;
+      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(c.name + ' Ash Wednesday Mass times ' + c.address)}`;
+      html += `
+        <div class="church-card" style="animation-delay:${i * 0.06}s">
+          <div class="card-top">
+            <div class="church-name">${esc(c.name)}</div>
+            <span class="distance-badge">${mi} mi</span>
+          </div>
+          ${c.address ? `<div class="church-address">${esc(c.address)}</div>` : ''}
+          <div class="card-actions">
+            <a class="card-btn btn-directions" href="${mapsUrl}" target="_blank">🗺️ Directions</a>
+            ${c.phone ? `<a class="card-btn btn-secondary" href="tel:${c.phone}">📞 Call</a>` : ''}
+            ${c.website ? `<a class="card-btn btn-secondary" href="${c.website}" target="_blank" rel="noopener">🌐 Website</a>` : ''}
+            <a class="card-btn btn-secondary" href="${searchUrl}" target="_blank" rel="noopener">🔍 Mass Times</a>
+          </div>
+        </div>`;
+    });
+
+    html += `<div class="tip-note"><strong>💡 Call ahead to confirm Ash Wednesday times.</strong><br>Many parishes add extra Masses and prayer services today.</div>`;
+    el.innerHTML = html;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showFallback(lat, lon) {
+    document.getElementById('results').innerHTML = `
+      <div class="results-header">Search Complete</div>
+      <div class="no-results">
+        <p>We couldn't find Catholic churches in our database for this area. Try these:</p>
+        <div class="fallback-links">
+          <a class="fallback-link" href="https://www.google.com/maps/search/catholic+church/@${lat},${lon},13z" target="_blank">🗺️ Search Google Maps</a>
+          <a class="fallback-link" href="https://masstimes.org/" target="_blank">⛪ MassTimes.org</a>
+        </div>
+      </div>`;
+  }
+
+  function showLoading() {
+    document.getElementById('results').innerHTML = `
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Finding churches near you...</div>
+      </div>`;
+  }
+
+  function showError(msg) {
+    document.getElementById('results').innerHTML = `<div class="error-msg">${msg}</div>`;
+  }
+
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 3959, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  function buildAddr(t) {
+    const parts = [];
+    if (t['addr:housenumber'] && t['addr:street']) parts.push(`${t['addr:housenumber']} ${t['addr:street']}`);
+    else if (t['addr:street']) parts.push(t['addr:street']);
+    const cs = [t['addr:city'], t['addr:state']].filter(Boolean).join(', ');
+    if (cs) parts.push(cs);
+    if (t['addr:postcode']) parts.push(t['addr:postcode']);
+    return parts.join(', ');
+  }
+
+  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+</script>
+
+</body>
+</html>
