@@ -1,835 +1,969 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find Ashes Near Me | Ash Wednesday 2026</title>
-<meta name="description" content="Find Catholic churches near you for Ash Wednesday ashes. Enter your zip code or use your location to find Mass times and ash distribution.">
-<meta property="og:title" content="Find Ashes Near Me">
-<meta property="og:description" content="Locate Catholic churches for Ash Wednesday ashes near you.">
+<title>Daily Lenten Companion | Find a Church Near You</title>
+<meta name="description" content="Your daily Lenten companion. Liturgical calendar, daily readings, saints, and find a Catholic church near you.">
+<meta property="og:title" content="Daily Lenten Companion">
+<meta property="og:description" content="Liturgical calendar, daily readings, and find a Catholic church near you for Lent 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --purple-deep: #2E1A47;
-    --purple-mid: #4A2D6B;
-    --purple-rich: #6B3FA0;
-    --purple-soft: #8B6AAF;
-    --purple-glow: rgba(139, 106, 175, 0.25);
-    --ash-dark: #1A1A1A;
-    --ash-warm: #3D3535;
+    /* Default: Violet / Lent */
+    --bg-deep: #2E1A47;
+    --bg-mid: #4A2D6B;
+    --bg-accent: #6B3FA0;
+    --bg-soft: #8B6AAF;
+    --bg-glow: rgba(139, 106, 175, 0.25);
+    --text-on-dark: #E8E0EC;
+    --text-muted: #B8A8C4;
+    --pill-bg: rgba(255,255,255,0.08);
     --cream: #FAF7F2;
     --cream-soft: #F0EBE3;
     --warm-white: #FFFDF9;
     --text-primary: #1C1618;
-    --text-secondary: #6B5E63;
-    --text-on-dark: #E8E0EC;
-    --text-on-dark-muted: #B8A8C4;
-    --gold-warm: #C49B4A;
-    --radius: 14px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Rose - Laetare Sunday */
+body.rose {
+–bg-deep: #4A2038;
+–bg-mid: #6B3050;
+–bg-accent: #C27088;
+–bg-soft: #D4909A;
+–bg-glow: rgba(210, 144, 154, 0.25);
+–text-on-dark: #F2E0E4;
+–text-muted: #D4B0B8;
+}
 
-  body {
-    font-family: 'Figtree', -apple-system, sans-serif;
-    background: var(--purple-deep);
-    color: var(--text-on-dark);
-    min-height: 100vh;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
+/* Red - Palm Sunday, Good Friday */
+body.red {
+–bg-deep: #3A0E0E;
+–bg-mid: #5C1A1A;
+–bg-accent: #A03030;
+–bg-soft: #C05050;
+–bg-glow: rgba(180, 60, 60, 0.25);
+–text-on-dark: #F0DADA;
+–text-muted: #D0A8A8;
+}
 
-  /* ======= HERO SECTION ======= */
-  .hero {
-    position: relative;
-    min-height: 52vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 24px 40px;
-    overflow: hidden;
-    background: linear-gradient(
-      170deg,
-      #1A0E2E 0%,
-      var(--purple-deep) 30%,
-      var(--purple-mid) 70%,
-      #3D2160 100%
-    );
-  }
+/* White/Gold - Easter, Holy Thursday, Holy Saturday */
+body.white {
+–bg-deep: #1A1A10;
+–bg-mid: #3A3520;
+–bg-accent: #C49B4A;
+–bg-soft: #D4B86A;
+–bg-glow: rgba(196, 155, 74, 0.25);
+–text-on-dark: #F5F0E0;
+–text-muted: #C8C0A8;
+}
 
-  /* Subtle grain texture overlay */
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.08;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 128px 128px;
-    pointer-events: none;
-  }
+- { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* Soft radial glow behind the cross */
-  .hero::after {
-    content: '';
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(139, 106, 175, 0.2) 0%, transparent 70%);
-    pointer-events: none;
-  }
+body {
+font-family: ‘Figtree’, -apple-system, sans-serif;
+background: var(–bg-deep);
+color: var(–text-on-dark);
+min-height: 100vh;
+overflow-x: hidden;
+-webkit-font-smoothing: antialiased;
+transition: background 0.6s ease;
+}
 
-  /* ======= ASH SMUDGE CROSS ======= */
-  .ash-cross-container {
-    position: relative;
-    width: 100px;
-    height: 120px;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: breatheIn 1s ease-out 0.3s forwards;
-  }
+.hero {
+position: relative;
+min-height: 48vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 48px 24px 36px;
+overflow: hidden;
+background: linear-gradient(170deg, color-mix(in srgb, var(–bg-deep) 80%, black) 0%, var(–bg-deep) 30%, var(–bg-mid) 70%, var(–bg-accent) 100%);
+transition: background 0.6s ease;
+}
 
-  /* The cross made of ash smudges */
-  .ash-cross-container svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 0 20px rgba(139, 106, 175, 0.3));
-  }
+.hero::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+opacity: 0.06;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’/%3E%3C/svg%3E”);
+background-size: 128px;
+pointer-events: none;
+}
 
-  .hero-title {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: clamp(2.4rem, 8vw, 3.6rem);
-    font-weight: 400;
-    text-align: center;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    color: #FFFFFF;
-    opacity: 0;
-    animation: breatheIn 1s ease-out 0.5s forwards;
-  }
+.hero::after {
+content: ‘’;
+position: absolute;
+top: 30%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 300px;
+height: 300px;
+background: radial-gradient(circle, var(–bg-glow) 0%, transparent 70%);
+pointer-events: none;
+}
 
-  .hero-subtitle {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--text-on-dark-muted);
-    text-align: center;
-    margin-top: 10px;
-    opacity: 0;
-    animation: breatheIn 1s ease-out 0.7s forwards;
-  }
+/* Liturgical color indicator dot */
+.color-dot {
+width: 12px;
+height: 12px;
+border-radius: 50%;
+margin-bottom: 16px;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.2s forwards;
+}
+.color-dot.violet { background: #8B6AAF; box-shadow: 0 0 12px rgba(139,106,175,0.5); }
+.color-dot.rose { background: #D4909A; box-shadow: 0 0 12px rgba(212,144,154,0.5); }
+.color-dot.red { background: #C05050; box-shadow: 0 0 12px rgba(192,80,80,0.5); }
+.color-dot.white { background: #D4B86A; box-shadow: 0 0 12px rgba(212,184,106,0.5); }
 
-  .date-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 18px;
-    padding: 7px 18px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 100px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-on-dark-muted);
-    opacity: 0;
-    animation: breatheIn 1s ease-out 0.9s forwards;
-  }
+.season-label {
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–bg-soft);
+margin-bottom: 8px;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.3s forwards;
+}
 
-  .date-pill .dot {
-    width: 5px;
-    height: 5px;
-    background: var(--purple-soft);
-    border-radius: 50%;
-  }
+.hero-title {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-size: clamp(2rem, 7vw, 3.2rem);
+font-weight: 400;
+text-align: center;
+line-height: 1.1;
+letter-spacing: -0.02em;
+color: #FFFFFF;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.4s forwards;
+}
 
-  /* ======= SEARCH CARD ======= */
-  .search-wrap {
-    position: relative;
-    z-index: 2;
-    max-width: 520px;
-    margin: -32px auto 0;
-    padding: 0 20px;
-    opacity: 0;
-    animation: slideUp 0.8s ease-out 1.1s forwards;
-  }
+.hero-date {
+font-size: 0.95rem;
+color: var(–text-muted);
+margin-top: 8px;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.55s forwards;
+}
 
-  .search-card {
-    background: var(--warm-white);
-    border-radius: 20px;
-    padding: 28px 24px;
-    box-shadow:
-      0 4px 24px rgba(0,0,0,0.12),
-      0 1px 3px rgba(0,0,0,0.06);
-  }
+.liturgical-color-name {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+margin-top: 14px;
+padding: 6px 14px;
+background: var(–pill-bg);
+backdrop-filter: blur(8px);
+-webkit-backdrop-filter: blur(8px);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 100px;
+font-size: 0.75rem;
+font-weight: 600;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: var(–text-muted);
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.7s forwards;
+}
 
-  .input-group {
-    position: relative;
-  }
+.liturgical-color-name .mini-dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+}
 
-  .search-input {
-    width: 100%;
-    font-family: 'Figtree', sans-serif;
-    font-size: 1.05rem;
-    padding: 16px 18px;
-    padding-right: 130px;
-    background: var(--cream);
-    border: 2px solid transparent;
-    border-radius: 12px;
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-  }
+/* Saint / Feast */
+.saint-section {
+max-width: 520px;
+margin: 0 auto;
+padding: 20px 20px 0;
+text-align: center;
+opacity: 0;
+animation: slideUp 0.8s ease-out 0.8s forwards;
+}
 
-  .search-input:focus {
-    border-color: var(--purple-rich);
-    box-shadow: 0 0 0 4px var(--purple-glow);
-  }
+.saint-name {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-size: 1.1rem;
+font-style: italic;
+color: var(–text-on-dark);
+}
 
-  .search-input::placeholder {
-    color: #A89CA0;
-  }
+.saint-type {
+font-size: 0.78rem;
+color: var(–text-muted);
+margin-top: 2px;
+}
 
-  .btn-find {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Figtree', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    padding: 11px 20px;
-    background: var(--purple-deep);
-    color: #fff;
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-  }
+/* Lenten note (fasting, abstinence, etc) */
+.lenten-note {
+max-width: 520px;
+margin: 16px auto 0;
+padding: 0 20px;
+opacity: 0;
+animation: slideUp 0.8s ease-out 0.9s forwards;
+}
 
-  .btn-find:hover { background: var(--purple-mid); }
-  .btn-find:active { transform: translateY(-50%) scale(0.97); }
-  .btn-find:disabled { opacity: 0.5; cursor: not-allowed; }
+.lenten-note-inner {
+text-align: center;
+padding: 12px 18px;
+background: rgba(255,255,255,0.06);
+border: 1px solid rgba(255,255,255,0.08);
+border-radius: 12px;
+font-size: 0.85rem;
+color: var(–text-muted);
+line-height: 1.5;
+}
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 18px 0;
-    color: #B8AEB2;
-    font-size: 0.82rem;
-  }
+.lenten-note-inner strong { color: var(–text-on-dark); }
 
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--cream-soft);
-  }
+/* Readings */
+.readings-section {
+max-width: 520px;
+margin: 24px auto 0;
+padding: 0 20px;
+opacity: 0;
+animation: slideUp 0.8s ease-out 1s forwards;
+}
 
-  .btn-location {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-family: 'Figtree', sans-serif;
-    font-size: 0.92rem;
-    font-weight: 500;
-    padding: 14px;
-    background: transparent;
-    color: var(--purple-rich);
-    border: 1.5px solid var(--purple-rich);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+.readings-card {
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.07);
+border-radius: 16px;
+padding: 20px;
+}
 
-  .btn-location:hover {
-    background: rgba(107, 63, 160, 0.06);
-  }
+.readings-title {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-size: 1.15rem;
+color: #fff;
+margin-bottom: 14px;
+}
 
-  .btn-location:disabled { opacity: 0.5; cursor: not-allowed; }
+.reading-item {
+padding: 10px 0;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+}
 
-  .btn-location svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-  }
+.reading-item:last-child { border-bottom: none; }
 
-  /* ======= WELCOME NOTE ======= */
-  .welcome-note {
-    max-width: 520px;
-    margin: 16px auto 0;
-    padding: 0 20px;
-    opacity: 0;
-    animation: slideUp 0.8s ease-out 1.3s forwards;
-  }
+.reading-label {
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+color: var(–bg-soft);
+margin-bottom: 3px;
+}
 
-  .welcome-inner {
-    text-align: center;
-    padding: 16px 20px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    font-size: 0.85rem;
-    color: var(--text-on-dark-muted);
-    line-height: 1.55;
-  }
+.reading-ref {
+font-size: 0.92rem;
+color: var(–text-on-dark);
+}
 
-  .welcome-inner strong {
-    color: var(--text-on-dark);
-  }
+.readings-link {
+display: block;
+text-align: center;
+margin-top: 14px;
+padding: 11px;
+background: var(–bg-accent);
+color: #fff;
+text-decoration: none;
+border-radius: 10px;
+font-size: 0.88rem;
+font-weight: 600;
+transition: opacity 0.2s;
+}
 
-  /* ======= SCRIPTURE ======= */
-  .scripture {
-    max-width: 520px;
-    margin: 28px auto;
-    padding: 0 20px;
-    text-align: center;
-    opacity: 0;
-    animation: breatheIn 1s ease-out 1.5s forwards;
-  }
+.readings-link:hover { opacity: 0.85; }
 
-  .scripture p {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--text-on-dark-muted);
-    line-height: 1.55;
-  }
+.readings-loading {
+text-align: center;
+padding: 20px;
+color: var(–text-muted);
+font-size: 0.88rem;
+}
 
-  .scripture cite {
-    display: block;
-    margin-top: 8px;
-    font-family: 'Figtree', sans-serif;
-    font-style: normal;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--purple-soft);
-  }
+/* Scripture quote */
+.scripture {
+max-width: 520px;
+margin: 24px auto;
+padding: 0 20px;
+text-align: center;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 1.1s forwards;
+}
 
-  /* ======= RESULTS ======= */
-  .results-wrap {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
+.scripture p {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-style: italic;
+font-size: 1.05rem;
+color: var(–text-muted);
+line-height: 1.5;
+}
 
-  .results-header {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 16px;
-  }
+.scripture cite {
+display: block;
+margin-top: 6px;
+font-family: ‘Figtree’, sans-serif;
+font-style: normal;
+font-size: 0.75rem;
+font-weight: 600;
+letter-spacing: 0.04em;
+color: var(–bg-soft);
+}
 
-  .results-count {
-    font-size: 0.82rem;
-    color: var(--text-on-dark-muted);
-    font-weight: 500;
-    margin-bottom: 16px;
-  }
+/* Divider */
+.section-divider {
+max-width: 520px;
+margin: 28px auto;
+padding: 0 20px;
+opacity: 0;
+animation: slideUp 0.8s ease-out 1.2s forwards;
+}
 
-  /* Loading */
-  .loading {
-    text-align: center;
-    padding: 48px 20px;
-  }
+.section-divider hr {
+border: none;
+border-top: 1px solid rgba(255,255,255,0.06);
+}
 
-  .loading-spinner {
-    width: 36px;
-    height: 36px;
-    border: 3px solid rgba(255,255,255,0.1);
-    border-top-color: var(--purple-soft);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
+.section-divider-label {
+text-align: center;
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–text-muted);
+margin-top: 12px;
+}
 
-  .loading-text {
-    color: var(--text-on-dark-muted);
-    font-size: 0.92rem;
-  }
+/* Search card */
+.search-wrap {
+max-width: 520px;
+margin: 20px auto 0;
+padding: 0 20px;
+opacity: 0;
+animation: slideUp 0.8s ease-out 1.3s forwards;
+}
 
-  /* Church Card */
-  .church-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 10px;
-    transition: background 0.2s ease, border-color 0.2s ease;
-    opacity: 0;
-    animation: cardReveal 0.5s ease-out forwards;
-  }
+.search-card {
+background: var(–warm-white);
+border-radius: 20px;
+padding: 24px;
+box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
 
-  .church-card:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.12);
-  }
+.input-group { position: relative; }
 
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 6px;
-  }
+.search-input {
+width: 100%;
+font-family: ‘Figtree’, sans-serif;
+font-size: 1.05rem;
+padding: 16px 18px;
+padding-right: 130px;
+background: var(–cream);
+border: 2px solid transparent;
+border-radius: 12px;
+color: var(–text-primary);
+outline: none;
+transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
 
-  .church-name {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 1.2rem;
-    color: #fff;
-    line-height: 1.2;
-  }
+.search-input:focus {
+border-color: var(–bg-accent);
+box-shadow: 0 0 0 4px var(–bg-glow);
+}
 
-  .distance-badge {
-    flex-shrink: 0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    background: rgba(139, 106, 175, 0.2);
-    color: var(--purple-soft);
-    border-radius: 100px;
-    white-space: nowrap;
-  }
+.search-input::placeholder { color: #A89CA0; }
 
-  .church-address {
-    font-size: 0.85rem;
-    color: var(--text-on-dark-muted);
-    margin-bottom: 14px;
-    line-height: 1.4;
-  }
+.search-input:-webkit-autofill,
+.search-input:-webkit-autofill:hover,
+.search-input:-webkit-autofill:focus {
+-webkit-box-shadow: 0 0 0px 1000px var(–cream) inset;
+-webkit-text-fill-color: var(–text-primary);
+font-family: ‘Figtree’, sans-serif;
+font-size: 1.05rem;
+}
 
-  .card-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+.btn-find {
+position: absolute;
+right: 6px;
+top: 50%;
+transform: translateY(-50%);
+font-family: ‘Figtree’, sans-serif;
+font-size: 0.88rem;
+font-weight: 600;
+padding: 11px 20px;
+background: var(–bg-deep);
+color: #fff;
+border: none;
+border-radius: 9px;
+cursor: pointer;
+transition: background 0.2s ease, transform 0.1s ease;
+}
 
-  .card-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-family: 'Figtree', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 9px 14px;
-    border-radius: 9px;
-    text-decoration: none;
-    transition: all 0.15s ease;
-    cursor: pointer;
-    border: none;
-  }
+.btn-find:hover { background: var(–bg-mid); }
+.btn-find:active { transform: translateY(-50%) scale(0.97); }
 
-  .btn-directions {
-    background: var(--purple-rich);
-    color: #fff;
-  }
+.divider {
+display: flex;
+align-items: center;
+gap: 14px;
+margin: 16px 0;
+color: #B8AEB2;
+font-size: 0.82rem;
+}
 
-  .btn-directions:hover { background: var(--purple-soft); }
+.divider::before, .divider::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–cream-soft);
+}
 
-  .btn-secondary {
-    background: rgba(255,255,255,0.08);
-    color: var(--text-on-dark);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
+.btn-location {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+font-family: ‘Figtree’, sans-serif;
+font-size: 0.92rem;
+font-weight: 500;
+padding: 14px;
+background: transparent;
+color: var(–bg-accent);
+border: 1.5px solid var(–bg-accent);
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.2s ease;
+}
 
-  .btn-secondary:hover {
-    background: rgba(255,255,255,0.12);
-  }
+.btn-location:hover { background: rgba(107, 63, 160, 0.06); }
 
-  /* Error */
-  .error-msg {
-    text-align: center;
-    padding: 18px 20px;
-    background: rgba(200, 80, 80, 0.12);
-    border: 1px solid rgba(200, 80, 80, 0.2);
-    border-radius: 12px;
-    color: #E8A0A0;
-    font-size: 0.9rem;
-    margin-bottom: 16px;
-  }
+.btn-location svg { width: 18px; height: 18px; }
 
-  /* No results */
-  .no-results {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-on-dark-muted);
-  }
+/* Welcome */
+.welcome-note {
+max-width: 520px;
+margin: 14px auto 0;
+padding: 0 20px;
+}
 
-  .fallback-links {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+.welcome-inner {
+text-align: center;
+padding: 14px 18px;
+background: rgba(255,255,255,0.04);
+border: 1px solid rgba(255,255,255,0.06);
+border-radius: 12px;
+font-size: 0.82rem;
+color: var(–text-muted);
+line-height: 1.5;
+}
 
-  .fallback-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    color: var(--text-on-dark);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: background 0.2s ease;
-  }
+.welcome-inner strong { color: var(–text-on-dark); }
 
-  .fallback-link:hover {
-    background: rgba(255,255,255,0.1);
-  }
+/* Results */
+.results-wrap {
+max-width: 520px;
+margin: 0 auto;
+padding: 0 20px 40px;
+}
 
-  /* Tip note */
-  .tip-note {
-    text-align: center;
-    padding: 16px 20px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    font-size: 0.82rem;
-    color: var(--text-on-dark-muted);
-    line-height: 1.5;
-    margin-top: 16px;
-  }
+.results-header {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-size: 1.4rem;
+color: #fff;
+margin-bottom: 12px;
+}
 
-  .tip-note strong {
-    color: var(--text-on-dark);
-  }
+.results-count {
+font-size: 0.8rem;
+color: var(–text-muted);
+margin-bottom: 14px;
+}
 
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 28px 20px 48px;
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.25);
-    line-height: 1.6;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    max-width: 520px;
-    margin: 0 auto;
-  }
+.loading { text-align: center; padding: 40px 20px; }
+.loading-spinner {
+width: 32px; height: 32px;
+border: 3px solid rgba(255,255,255,0.1);
+border-top-color: var(–bg-soft);
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+margin: 0 auto 12px;
+}
+.loading-text { color: var(–text-muted); font-size: 0.9rem; }
 
-  footer a {
-    color: var(--purple-soft);
-    text-decoration: none;
-  }
+.church-card {
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.08);
+border-radius: 14px;
+padding: 18px;
+margin-bottom: 10px;
+transition: background 0.2s, border-color 0.2s;
+opacity: 0;
+animation: cardReveal 0.5s ease-out forwards;
+}
 
-  /* ======= ANIMATIONS ======= */
-  @keyframes breatheIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to { opacity: 1; transform: scale(1); }
-  }
+.church-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
 
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
 
-  @keyframes cardReveal {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.church-name {
+font-family: ‘Instrument Serif’, Georgia, serif;
+font-size: 1.15rem;
+color: #fff;
+line-height: 1.2;
+}
 
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
+.distance-badge {
+flex-shrink: 0;
+font-size: 0.73rem;
+font-weight: 600;
+padding: 4px 10px;
+background: var(–bg-glow);
+color: var(–bg-soft);
+border-radius: 100px;
+white-space: nowrap;
+}
 
-  /* ======= MOBILE ======= */
-  @media (max-width: 480px) {
-    .search-input { padding-right: 18px; font-size: 1rem; }
-    .btn-find {
-      position: static;
-      transform: none;
-      width: 100%;
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 12px;
-    }
-    .btn-find:active { transform: scale(0.97); }
-    .input-group { display: flex; flex-direction: column; }
-    .card-actions { flex-direction: column; }
-    .card-btn { justify-content: center; }
-  }
+.church-address { font-size: 0.83rem; color: var(–text-muted); margin-bottom: 12px; line-height: 1.4; }
+
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.card-btn {
+display: inline-flex; align-items: center; gap: 5px;
+font-family: ‘Figtree’, sans-serif; font-size: 0.78rem; font-weight: 600;
+padding: 8px 13px; border-radius: 8px;
+text-decoration: none; transition: all 0.15s; border: none; cursor: pointer;
+}
+
+.btn-directions { background: var(–bg-accent); color: #fff; }
+.btn-directions:hover { opacity: 0.85; }
+.btn-secondary { background: rgba(255,255,255,0.08); color: var(–text-on-dark); border: 1px solid rgba(255,255,255,0.1); }
+.btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+.error-msg {
+text-align: center; padding: 16px 18px;
+background: rgba(200,80,80,0.12); border: 1px solid rgba(200,80,80,0.2);
+border-radius: 12px; color: #E8A0A0; font-size: 0.88rem;
+}
+
+.fallback-links { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.fallback-link {
+display: flex; align-items: center; justify-content: center; gap: 8px;
+padding: 13px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+border-radius: 12px; color: var(–text-on-dark); text-decoration: none;
+font-size: 0.88rem; font-weight: 500; transition: background 0.2s;
+}
+.fallback-link:hover { background: rgba(255,255,255,0.1); }
+
+.tip-note {
+text-align: center; padding: 14px 18px;
+background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+border-radius: 12px; font-size: 0.8rem; color: var(–text-muted); line-height: 1.5; margin-top: 14px;
+}
+.tip-note strong { color: var(–text-on-dark); }
+
+footer {
+text-align: center; padding: 24px 20px 36px;
+font-size: 0.73rem; color: rgba(255,255,255,0.2); line-height: 1.6;
+border-top: 1px solid rgba(255,255,255,0.05);
+max-width: 520px; margin: 0 auto;
+}
+
+.disclaimer {
+max-width: 520px; margin: 0 auto; padding: 0 20px 16px;
+text-align: center; font-size: 0.7rem; color: rgba(255,255,255,0.18); line-height: 1.6;
+}
+
+/* Day counter */
+.day-counter {
+max-width: 520px; margin: 0 auto; padding: 16px 20px 0;
+text-align: center;
+opacity: 0;
+animation: breatheIn 0.8s ease-out 0.85s forwards;
+}
+
+.day-counter-text {
+font-size: 0.78rem;
+font-weight: 600;
+color: var(–text-muted);
+letter-spacing: 0.04em;
+}
+
+.day-counter-bar {
+margin-top: 8px;
+height: 4px;
+background: rgba(255,255,255,0.08);
+border-radius: 2px;
+overflow: hidden;
+}
+
+.day-counter-fill {
+height: 100%;
+background: var(–bg-soft);
+border-radius: 2px;
+transition: width 0.6s ease;
+}
+
+@keyframes breatheIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cardReveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 480px) {
+.search-input { padding-right: 18px; font-size: 1rem; }
+.btn-find { position: static; transform: none; width: 100%; margin-top: 10px; padding: 14px; border-radius: 12px; }
+.btn-find:active { transform: scale(0.97); }
+.input-group { display: flex; flex-direction: column; }
+.card-actions { flex-direction: column; }
+.card-btn { justify-content: center; }
+}
 </style>
+
 </head>
 <body>
 
-<!-- ======= HERO ======= -->
 <section class="hero">
-  <div class="ash-cross-container">
-    <!-- SVG ash smudge cross -->
-    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="smudge" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="2" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-          <feGaussianBlur stdDeviation="1.2"/>
-        </filter>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="4" result="blur"/>
-          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-        </filter>
-        <radialGradient id="ashGrad" cx="50%" cy="45%" r="55%">
-          <stop offset="0%" stop-color="#5A4A5A" stop-opacity="0.95"/>
-          <stop offset="50%" stop-color="#3D3035" stop-opacity="0.85"/>
-          <stop offset="100%" stop-color="#2A2025" stop-opacity="0.6"/>
-        </radialGradient>
-      </defs>
-      <!-- Ash smudge background glow -->
-      <ellipse cx="50" cy="55" rx="38" ry="42" fill="rgba(139,106,175,0.08)" filter="url(#glow)"/>
-      <!-- Vertical stroke - imperfect, organic -->
-      <path d="M 48 8 C 46 20, 52 35, 49 55 C 47 75, 53 95, 50 112"
-            stroke="url(#ashGrad)" stroke-width="18" stroke-linecap="round"
-            fill="none" filter="url(#smudge)" opacity="0.9"/>
-      <!-- Horizontal stroke -->
-      <path d="M 18 38 C 28 36, 38 40, 50 38 C 62 36, 72 40, 82 37"
-            stroke="url(#ashGrad)" stroke-width="16" stroke-linecap="round"
-            fill="none" filter="url(#smudge)" opacity="0.85"/>
-      <!-- Extra ash particles / texture dots -->
-      <circle cx="35" cy="28" r="2.5" fill="#4A3A4A" opacity="0.3" filter="url(#smudge)"/>
-      <circle cx="68" cy="45" r="2" fill="#4A3A4A" opacity="0.25" filter="url(#smudge)"/>
-      <circle cx="42" cy="78" r="3" fill="#4A3A4A" opacity="0.2" filter="url(#smudge)"/>
-      <circle cx="58" cy="92" r="2" fill="#4A3A4A" opacity="0.15" filter="url(#smudge)"/>
-      <circle cx="30" cy="50" r="1.5" fill="#4A3A4A" opacity="0.2" filter="url(#smudge)"/>
-    </svg>
-  </div>
-
-  <h1 class="hero-title">Find Ashes<br>Near You</h1>
-  <p class="hero-subtitle">Locate a church for Ash Wednesday</p>
-  <span class="date-pill">
-    <span class="dot"></span>
-    February 18, 2026
-  </span>
+  <div class="color-dot" id="colorDot"></div>
+  <div class="season-label" id="seasonLabel"></div>
+  <h1 class="hero-title" id="heroTitle"></h1>
+  <p class="hero-date" id="heroDate"></p>
+  <span class="liturgical-color-name" id="colorPill"></span>
 </section>
 
-<!-- ======= SEARCH ======= -->
+<div class="saint-section" id="saintSection"></div>
+
+<div class="lenten-note" id="lentenNote"></div>
+
+<div class="day-counter" id="dayCounter"></div>
+
+<div class="readings-section" id="readingsSection">
+  <div class="readings-card">
+    <div class="readings-title">Today's Readings</div>
+    <div id="readingsContent" class="readings-loading">Loading readings...</div>
+  </div>
+</div>
+
+<div class="section-divider">
+  <hr>
+  <div class="section-divider-label">Find a Church</div>
+</div>
+
 <div class="search-wrap">
   <div class="search-card">
     <div class="input-group">
-      <input
-        type="text"
-        class="search-input"
-        id="zipInput"
-        placeholder="Enter your zip code"
-        maxlength="5"
-        inputmode="numeric"
-        pattern="[0-9]*"
-        aria-label="Zip code"
-      >
+      <input type="text" class="search-input" id="zipInput" placeholder="Enter your zip code" maxlength="5" inputmode="numeric" pattern="[0-9]*" aria-label="Zip code">
       <button class="btn-find" id="searchBtn" onclick="searchByZip()">Find Churches</button>
     </div>
     <div class="divider">or</div>
     <button class="btn-location" id="locationBtn" onclick="searchByLocation()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg>
       Use My Location
     </button>
   </div>
 </div>
 
-<!-- ======= WELCOME ======= -->
 <div class="welcome-note">
   <div class="welcome-inner">
-    <strong>Everyone is welcome to receive ashes.</strong><br>
-    You don't need to be Catholic or a parish member. Just walk up when it's time.
+    <strong>Everyone is welcome.</strong><br>
+    You don't need to be Catholic or a parish member to attend Mass or receive ashes.
   </div>
 </div>
 
-<!-- ======= SCRIPTURE ======= -->
-<div class="scripture">
-  <p>"Remember that you are dust,<br>and to dust you shall return."</p>
-  <cite>Genesis 3:19</cite>
-</div>
-
-<!-- ======= RESULTS ======= -->
 <div class="results-wrap" id="results"></div>
 
-<!-- ======= FOOTER ======= -->
 <footer>
-  Call ahead or check parish websites to confirm Ash Wednesday times.
+  Call ahead or check parish websites to confirm Mass times and schedules.
 </footer>
 
+<div class="disclaimer">
+  This tool uses publicly available data to locate nearby Catholic churches. Mass times and schedules may vary — always confirm directly with the parish. Not affiliated with or endorsed by any diocese, parish, or Catholic organization. Daily readings sourced from USCCB.
+</div>
+
 <script>
-  document.getElementById('zipInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') searchByZip();
-  });
+// =====================================================
+// LENTEN CALENDAR DATA: Feb 18 - April 12, 2026
+// =====================================================
+const CALENDAR = {
+  // FEBRUARY
+  "2026-02-18": { title: "Ash Wednesday", color: "violet", season: "Lent", note: "Day of fasting and abstinence. Ashes are distributed at Mass and prayer services.", dayOfLent: 1 },
+  "2026-02-19": { title: "Thursday After\nAsh Wednesday", color: "violet", season: "Lent", dayOfLent: 2 },
+  "2026-02-20": { title: "Friday After\nAsh Wednesday", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", saint: "Friday after Ash Wednesday", dayOfLent: 3 },
+  "2026-02-21": { title: "Saturday After\nAsh Wednesday", color: "violet", season: "Lent", saint: "St. Peter Damian, Bishop and Doctor of the Church", dayOfLent: 4 },
+  "2026-02-22": { title: "First Sunday\nof Lent", color: "violet", season: "Lent", dayOfLent: 5 },
+  "2026-02-23": { title: "Monday, First Week of Lent", color: "violet", season: "Lent", saint: "St. Polycarp, Bishop and Martyr", dayOfLent: 6 },
+  "2026-02-24": { title: "Tuesday, First Week of Lent", color: "violet", season: "Lent", dayOfLent: 7 },
+  "2026-02-25": { title: "Wednesday, First Week of Lent", color: "violet", season: "Lent", dayOfLent: 8 },
+  "2026-02-26": { title: "Thursday, First Week of Lent", color: "violet", season: "Lent", dayOfLent: 9 },
+  "2026-02-27": { title: "Friday, First Week of Lent", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", saint: "St. Gregory of Narek, Abbot and Doctor of the Church", dayOfLent: 10 },
+  "2026-02-28": { title: "Saturday, First Week of Lent", color: "violet", season: "Lent", dayOfLent: 11 },
 
-  async function searchByZip() {
-    const zip = document.getElementById('zipInput').value.trim();
-    if (!/^\d{5}$/.test(zip)) {
-      showError('Please enter a valid 5-digit zip code.');
-      return;
+  // MARCH
+  "2026-03-01": { title: "Second Sunday\nof Lent", color: "violet", season: "Lent", dayOfLent: 12 },
+  "2026-03-02": { title: "Monday, Second Week of Lent", color: "violet", season: "Lent", dayOfLent: 13 },
+  "2026-03-03": { title: "Tuesday, Second Week of Lent", color: "violet", season: "Lent", saint: "St. Katharine Drexel, Virgin", dayOfLent: 14 },
+  "2026-03-04": { title: "Wednesday, Second Week of Lent", color: "violet", season: "Lent", saint: "St. Casimir", dayOfLent: 15 },
+  "2026-03-05": { title: "Thursday, Second Week of Lent", color: "violet", season: "Lent", dayOfLent: 16 },
+  "2026-03-06": { title: "Friday, Second Week of Lent", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", dayOfLent: 17 },
+  "2026-03-07": { title: "Saturday, Second Week of Lent", color: "violet", season: "Lent", saint: "Sts. Perpetua and Felicity, Martyrs", dayOfLent: 18 },
+  "2026-03-08": { title: "Third Sunday\nof Lent", color: "violet", season: "Lent", dayOfLent: 19 },
+  "2026-03-09": { title: "Monday, Third Week of Lent", color: "violet", season: "Lent", saint: "St. Frances of Rome, Religious", dayOfLent: 20 },
+  "2026-03-10": { title: "Tuesday, Third Week of Lent", color: "violet", season: "Lent", dayOfLent: 21 },
+  "2026-03-11": { title: "Wednesday, Third Week of Lent", color: "violet", season: "Lent", dayOfLent: 22 },
+  "2026-03-12": { title: "Thursday, Third Week of Lent", color: "violet", season: "Lent", dayOfLent: 23 },
+  "2026-03-13": { title: "Friday, Third Week of Lent", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", dayOfLent: 24 },
+  "2026-03-14": { title: "Saturday, Third Week of Lent", color: "violet", season: "Lent", dayOfLent: 25 },
+  "2026-03-15": { title: "Fourth Sunday of Lent\n(Laetare Sunday)", color: "rose", season: "Lent", note: "Laetare Sunday — \"Rejoice!\" Rose vestments may be worn today.", dayOfLent: 26 },
+  "2026-03-16": { title: "Monday, Fourth Week of Lent", color: "violet", season: "Lent", dayOfLent: 27 },
+  "2026-03-17": { title: "Tuesday, Fourth Week of Lent", color: "violet", season: "Lent", saint: "St. Patrick, Bishop", dayOfLent: 28 },
+  "2026-03-18": { title: "Wednesday, Fourth Week of Lent", color: "violet", season: "Lent", saint: "St. Cyril of Jerusalem, Bishop and Doctor of the Church", dayOfLent: 29 },
+  "2026-03-19": { title: "Solemnity of\nSt. Joseph", color: "white", season: "Lent", saint: "St. Joseph, Spouse of the Blessed Virgin Mary", note: "Solemnity — white vestments today.", dayOfLent: 30 },
+  "2026-03-20": { title: "Friday, Fourth Week of Lent", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", dayOfLent: 31 },
+  "2026-03-21": { title: "Saturday, Fourth Week of Lent", color: "violet", season: "Lent", dayOfLent: 32 },
+  "2026-03-22": { title: "Fifth Sunday\nof Lent", color: "violet", season: "Lent", dayOfLent: 33 },
+  "2026-03-23": { title: "Monday, Fifth Week of Lent", color: "violet", season: "Lent", saint: "St. Turibius of Mogrovejo, Bishop", dayOfLent: 34 },
+  "2026-03-24": { title: "Tuesday, Fifth Week of Lent", color: "violet", season: "Lent", dayOfLent: 35 },
+  "2026-03-25": { title: "The Annunciation\nof the Lord", color: "white", season: "Lent", note: "Solemnity — white vestments today.", dayOfLent: 36 },
+  "2026-03-26": { title: "Thursday, Fifth Week of Lent", color: "violet", season: "Lent", dayOfLent: 37 },
+  "2026-03-27": { title: "Friday, Fifth Week of Lent", color: "violet", season: "Lent", note: "Day of abstinence — no meat today.", dayOfLent: 38 },
+  "2026-03-28": { title: "Saturday, Fifth Week of Lent", color: "violet", season: "Lent", dayOfLent: 39 },
+  "2026-03-29": { title: "Palm Sunday of the\nPassion of the Lord", color: "red", season: "Holy Week", note: "Holy Week begins. Palms are blessed and distributed.", dayOfLent: 40 },
+  "2026-03-30": { title: "Monday of\nHoly Week", color: "violet", season: "Holy Week", dayOfLent: 41 },
+  "2026-03-31": { title: "Tuesday of\nHoly Week", color: "violet", season: "Holy Week", dayOfLent: 42 },
+
+  // APRIL
+  "2026-04-01": { title: "Wednesday of\nHoly Week", color: "violet", season: "Holy Week", dayOfLent: 43 },
+  "2026-04-02": { title: "Holy Thursday", color: "white", season: "The Triduum", note: "Mass of the Lord's Supper. The Triduum begins.", dayOfLent: 44 },
+  "2026-04-03": { title: "Good Friday", color: "red", season: "The Triduum", note: "Day of fasting and abstinence. No Mass is celebrated today — Celebration of the Lord's Passion.", dayOfLent: 45 },
+  "2026-04-04": { title: "Holy Saturday", color: "white", season: "The Triduum", note: "The Easter Vigil is celebrated after nightfall — the most important liturgy of the year.", dayOfLent: 46 },
+  "2026-04-05": { title: "Easter Sunday\nof the Resurrection\nof the Lord", color: "white", season: "Easter", note: "He is risen! Alleluia! 🕊️", dayOfLent: null },
+  "2026-04-06": { title: "Monday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-07": { title: "Tuesday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-08": { title: "Wednesday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-09": { title: "Thursday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-10": { title: "Friday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-11": { title: "Saturday Within\nthe Octave of Easter", color: "white", season: "Easter", dayOfLent: null },
+  "2026-04-12": { title: "Second Sunday of Easter\n(Sunday of Divine Mercy)", color: "white", season: "Easter", dayOfLent: null },
+};
+
+// =====================================================
+// INITIALIZE
+// =====================================================
+function init() {
+  const today = new Date();
+  const key = today.toISOString().split('T')[0];
+  const dayData = CALENDAR[key];
+
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const dateStr = `${days[today.getDay()]}, ${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+  if (!dayData) {
+    // Outside Lent/Easter range
+    document.getElementById('heroTitle').innerHTML = 'Find a Catholic<br>Church Near You';
+    document.getElementById('heroDate').textContent = dateStr;
+    document.getElementById('seasonLabel').textContent = '';
+    document.getElementById('colorPill').style.display = 'none';
+    document.getElementById('colorDot').style.display = 'none';
+    document.getElementById('dayCounter').style.display = 'none';
+    document.getElementById('readingsSection').style.display = 'none';
+    document.getElementById('saintSection').style.display = 'none';
+    document.getElementById('lentenNote').style.display = 'none';
+    return;
+  }
+
+  // Set color theme
+  document.body.className = dayData.color;
+
+  // Color dot
+  const dot = document.getElementById('colorDot');
+  dot.className = `color-dot ${dayData.color}`;
+
+  // Season label
+  document.getElementById('seasonLabel').textContent = dayData.season;
+
+  // Title (handle \n for line breaks)
+  document.getElementById('heroTitle').innerHTML = dayData.title.replace(/\n/g, '<br>');
+
+  // Date
+  document.getElementById('heroDate').textContent = dateStr;
+
+  // Color pill
+  const colorNames = { violet: 'Violet', rose: 'Rose', red: 'Red', white: 'White & Gold' };
+  const colorHexes = { violet: '#8B6AAF', rose: '#D4909A', red: '#C05050', white: '#D4B86A' };
+  document.getElementById('colorPill').innerHTML = `<span class="mini-dot" style="background:${colorHexes[dayData.color]}"></span> Liturgical Color: ${colorNames[dayData.color]}`;
+
+  // Saint
+  const saintEl = document.getElementById('saintSection');
+  if (dayData.saint) {
+    saintEl.innerHTML = `<div class="saint-name">${dayData.saint}</div>`;
+  } else {
+    saintEl.style.display = 'none';
+  }
+
+  // Lenten note
+  const noteEl = document.getElementById('lentenNote');
+  if (dayData.note) {
+    noteEl.innerHTML = `<div class="lenten-note-inner"><strong>${dayData.note}</strong></div>`;
+  } else {
+    noteEl.style.display = 'none';
+  }
+
+  // Day counter
+  const counterEl = document.getElementById('dayCounter');
+  if (dayData.dayOfLent) {
+    const totalDays = 46; // Ash Wednesday to Holy Saturday
+    const pct = Math.round((dayData.dayOfLent / totalDays) * 100);
+    counterEl.innerHTML = `
+      <div class="day-counter-text">Day ${dayData.dayOfLent} of Lent</div>
+      <div class="day-counter-bar"><div class="day-counter-fill" style="width:${pct}%"></div></div>
+    `;
+  } else {
+    counterEl.style.display = 'none';
+  }
+
+  // Load readings
+  loadReadings(today);
+}
+
+// =====================================================
+// READINGS API
+// =====================================================
+async function loadReadings(date) {
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
+  const contentEl = document.getElementById('readingsContent');
+
+  try {
+    const res = await fetch(`https://cpbjr.github.io/catholic-readings-api/readings/${year}/${mm}-${dd}.json`);
+    if (!res.ok) throw new Error('No readings data');
+    const data = await res.json();
+
+    let html = '';
+    if (data.first_reading) {
+      html += `<div class="reading-item"><div class="reading-label">First Reading</div><div class="reading-ref">${data.first_reading}</div></div>`;
     }
-    showLoading();
+    if (data.psalm) {
+      html += `<div class="reading-item"><div class="reading-label">Responsorial Psalm</div><div class="reading-ref">${data.psalm}</div></div>`;
+    }
+    if (data.second_reading) {
+      html += `<div class="reading-item"><div class="reading-label">Second Reading</div><div class="reading-ref">${data.second_reading}</div></div>`;
+    }
+    if (data.gospel) {
+      html += `<div class="reading-item"><div class="reading-label">Gospel</div><div class="reading-ref">${data.gospel}</div></div>`;
+    }
+
+    html += `<a class="readings-link" href="https://bible.usccb.org/bible/readings/${mm}${dd}${String(year).slice(2)}.cfm" target="_blank" rel="noopener">Read Full Readings at USCCB →</a>`;
+    contentEl.innerHTML = html;
+  } catch (err) {
+    // Fallback: just link to USCCB
+    contentEl.innerHTML = `
+      <div style="text-align:center;color:var(--text-muted);padding:8px 0;font-size:0.88rem;">
+        <a class="readings-link" href="https://bible.usccb.org/bible/readings/${mm}${dd}${String(year).slice(2)}.cfm" target="_blank" rel="noopener">View Today's Readings at USCCB →</a>
+      </div>
+    `;
+  }
+}
+
+// =====================================================
+// CHURCH FINDER (same as before)
+// =====================================================
+document.getElementById('zipInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchByZip();
+});
+
+async function searchByZip() {
+  const zip = document.getElementById('zipInput').value.trim();
+  if (!/^\d{5}$/.test(zip)) { showError('Please enter a valid 5-digit zip code.'); return; }
+  showLoading();
+  try {
+    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${zip}&country=US&format=json&limit=1`, { headers: { 'User-Agent': 'LentenCompanion/1.0' } });
+    const geoData = await geoRes.json();
+    if (!geoData?.length) { showError("Couldn't find that zip code."); return; }
+    await findChurches(parseFloat(geoData[0].lat), parseFloat(geoData[0].lon));
+  } catch (err) { showError('Something went wrong. Please try again.'); }
+}
+
+async function searchByLocation() {
+  if (!navigator.geolocation) { showError('Geolocation not supported.'); return; }
+  const btn = document.getElementById('locationBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Getting location...';
+  showLoading();
+  navigator.geolocation.getCurrentPosition(
+    async pos => { resetLocBtn(btn); await findChurches(pos.coords.latitude, pos.coords.longitude); },
+    err => { resetLocBtn(btn); showError("Couldn't get location. Enter a zip code instead."); },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 300000 }
+  );
+}
+
+function resetLocBtn(btn) {
+  btn.disabled = false;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Use My Location';
+}
+
+async function findChurches(lat, lon) {
+  try {
+    const radius = 16000;
+    const query = `[out:json][timeout:20];(nwr["amenity"="place_of_worship"]["denomination"="catholic"](around:${radius},${lat},${lon});nwr["amenity"="place_of_worship"]["religion"="christian"]["denomination"="roman_catholic"](around:${radius},${lat},${lon}););out center body;`;
+    let data;
     try {
-      const geoRes = await fetch(
-        `https://nominatim.openstreetmap.org/search?postalcode=${zip}&country=US&format=json&limit=1`,
-        { headers: { 'User-Agent': 'FindAshesNearMe/1.0' } }
-      );
-      const geoData = await geoRes.json();
-      if (!geoData?.length) {
-        showError("Couldn't find that zip code. Please try again.");
-        return;
-      }
-      await findChurches(parseFloat(geoData[0].lat), parseFloat(geoData[0].lon));
-    } catch (err) {
-      showError('Something went wrong. Please try again.');
-      console.error(err);
-    }
-  }
-
-  async function searchByLocation() {
-    if (!navigator.geolocation) {
-      showError('Geolocation is not supported by your browser.');
-      return;
-    }
-    const btn = document.getElementById('locationBtn');
-    btn.disabled = true;
-    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Getting location...`;
-    showLoading();
-    navigator.geolocation.getCurrentPosition(
-      async pos => {
-        resetLocationBtn(btn);
-        await findChurches(pos.coords.latitude, pos.coords.longitude);
-      },
-      err => {
-        resetLocationBtn(btn);
-        showError("Couldn't get your location. Please enter a zip code instead.");
-        console.error(err);
-      },
-      { enableHighAccuracy: false, timeout: 10000 }
-    );
-  }
-
-  function resetLocationBtn(btn) {
-    btn.disabled = false;
-    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7 11.5 7.3 11.8a1 1 0 0 0 1.4 0C13 21.5 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg> Use My Location`;
-  }
-
-  async function findChurches(lat, lon) {
-    try {
-      const radius = 16000;
-      const query = `[out:json][timeout:15];(nwr["amenity"="place_of_worship"]["denomination"="catholic"](around:${radius},${lat},${lon});nwr["amenity"="place_of_worship"]["religion"="christian"]["denomination"="roman_catholic"](around:${radius},${lat},${lon}););out center body;`;
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 15000);
       const res = await fetch('https://overpass-api.de/api/interpreter', {
-        method: 'POST',
-        body: `data=${encodeURIComponent(query)}`
+        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `data=${encodeURIComponent(query)}`, signal: ctrl.signal
       });
-      const data = await res.json();
-      if (!data.elements?.length) {
-        showFallback(lat, lon);
-        return;
-      }
-      const churches = data.elements
-        .map(el => {
-          const eLat = el.lat || el.center?.lat;
-          const eLon = el.lon || el.center?.lon;
-          if (!eLat || !eLon) return null;
-          const t = el.tags || {};
-          return {
-            name: t.name || t['name:en'] || 'Catholic Church',
-            phone: t.phone || t['contact:phone'] || null,
-            website: t.website || t['contact:website'] || null,
-            address: buildAddr(t),
-            lat: eLat, lon: eLon,
-            distance: haversine(lat, lon, eLat, eLon)
-          };
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, 15);
-      renderResults(churches);
-    } catch (err) {
-      showError('Could not search for churches. Please try again.');
-      console.error(err);
-    }
-  }
+      clearTimeout(tid);
+      data = await res.json();
+    } catch (e) { showFallback(lat, lon); return; }
+    if (!data.elements?.length) { showFallback(lat, lon); return; }
+    const churches = data.elements.map(el => {
+      const eLat = el.lat || el.center?.lat, eLon = el.lon || el.center?.lon;
+      if (!eLat || !eLon) return null;
+      const t = el.tags || {};
+      return { name: t.name || t['name:en'] || 'Catholic Church', phone: t.phone || t['contact:phone'] || null, website: t.website || t['contact:website'] || null, address: buildAddr(t), lat: eLat, lon: eLon, distance: haversine(lat, lon, eLat, eLon) };
+    }).filter(Boolean).sort((a, b) => a.distance - b.distance).slice(0, 15);
+    renderResults(churches);
+  } catch (err) { showFallback(lat, lon); }
+}
 
-  function renderResults(churches) {
-    const el = document.getElementById('results');
-    if (!churches.length) { el.innerHTML = ''; return; }
+function renderResults(churches) {
+  const el = document.getElementById('results');
+  if (!churches.length) { el.innerHTML = ''; return; }
+  let html = `<div class="results-header">Churches Near You</div><div class="results-count">${churches.length} Catholic churches within 10 miles</div>`;
+  churches.forEach((c, i) => {
+    const mi = c.distance.toFixed(1);
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lon}`;
+    const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(c.name + ' Mass times ' + c.address)}`;
+    html += `<div class="church-card" style="animation-delay:${i*0.06}s"><div class="card-top"><div class="church-name">${esc(c.name)}</div><span class="distance-badge">${mi} mi</span></div>${c.address ? `<div class="church-address">${esc(c.address)}</div>` : ''}<div class="card-actions"><a class="card-btn btn-directions" href="${mapsUrl}" target="_blank">🗺️ Directions</a>${c.phone ? `<a class="card-btn btn-secondary" href="tel:${c.phone}">📞 Call</a>` : ''}${c.website ? `<a class="card-btn btn-secondary" href="${c.website}" target="_blank" rel="noopener">🌐 Website</a>` : ''}<a class="card-btn btn-secondary" href="${searchUrl}" target="_blank" rel="noopener">🔍 Mass Times</a></div></div>`;
+  });
+  html += `<div class="tip-note"><strong>💡 Call ahead to confirm schedules.</strong><br>Parishes may have special Lenten services beyond regular Mass times.</div>`;
+  el.innerHTML = html;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-    let html = `<div class="results-header">Churches Near You</div>`;
-    html += `<div class="results-count">${churches.length} Catholic ${churches.length === 1 ? 'church' : 'churches'} found within 10 miles</div>`;
+function showFallback(lat, lon) {
+  document.getElementById('results').innerHTML = `<div class="results-header">Search Complete</div><div style="text-align:center;padding:30px 20px;color:var(--text-muted)"><p>We couldn't find churches in our database for this area. Try:</p><div class="fallback-links"><a class="fallback-link" href="https://www.google.com/maps/search/catholic+church/@${lat},${lon},13z" target="_blank">🗺️ Search Google Maps</a><a class="fallback-link" href="https://masstimes.org/" target="_blank">⛪ MassTimes.org</a></div></div>`;
+}
 
-    churches.forEach((c, i) => {
-      const mi = c.distance.toFixed(1);
-      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lon}`;
-      const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(c.name + ' Ash Wednesday Mass times ' + c.address)}`;
-      html += `
-        <div class="church-card" style="animation-delay:${i * 0.06}s">
-          <div class="card-top">
-            <div class="church-name">${esc(c.name)}</div>
-            <span class="distance-badge">${mi} mi</span>
-          </div>
-          ${c.address ? `<div class="church-address">${esc(c.address)}</div>` : ''}
-          <div class="card-actions">
-            <a class="card-btn btn-directions" href="${mapsUrl}" target="_blank">🗺️ Directions</a>
-            ${c.phone ? `<a class="card-btn btn-secondary" href="tel:${c.phone}">📞 Call</a>` : ''}
-            ${c.website ? `<a class="card-btn btn-secondary" href="${c.website}" target="_blank" rel="noopener">🌐 Website</a>` : ''}
-            <a class="card-btn btn-secondary" href="${searchUrl}" target="_blank" rel="noopener">🔍 Mass Times</a>
-          </div>
-        </div>`;
-    });
+function showLoading() { document.getElementById('results').innerHTML = `<div class="loading"><div class="loading-spinner"></div><div class="loading-text">Finding churches near you...</div></div>`; }
+function showError(msg) { document.getElementById('results').innerHTML = `<div class="error-msg">${msg}</div>`; }
+function haversine(lat1,lon1,lat2,lon2) { const R=3959,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180; const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2; return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); }
+function buildAddr(t) { const p=[]; if(t['addr:housenumber']&&t['addr:street'])p.push(`${t['addr:housenumber']} ${t['addr:street']}`);else if(t['addr:street'])p.push(t['addr:street']); const cs=[t['addr:city'],t['addr:state']].filter(Boolean).join(', '); if(cs)p.push(cs); if(t['addr:postcode'])p.push(t['addr:postcode']); return p.join(', '); }
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
-    html += `<div class="tip-note"><strong>💡 Call ahead to confirm Ash Wednesday times.</strong><br>Many parishes add extra Masses and prayer services today.</div>`;
-    el.innerHTML = html;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function showFallback(lat, lon) {
-    document.getElementById('results').innerHTML = `
-      <div class="results-header">Search Complete</div>
-      <div class="no-results">
-        <p>We couldn't find Catholic churches in our database for this area. Try these:</p>
-        <div class="fallback-links">
-          <a class="fallback-link" href="https://www.google.com/maps/search/catholic+church/@${lat},${lon},13z" target="_blank">🗺️ Search Google Maps</a>
-          <a class="fallback-link" href="https://masstimes.org/" target="_blank">⛪ MassTimes.org</a>
-        </div>
-      </div>`;
-  }
-
-  function showLoading() {
-    document.getElementById('results').innerHTML = `
-      <div class="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-text">Finding churches near you...</div>
-      </div>`;
-  }
-
-  function showError(msg) {
-    document.getElementById('results').innerHTML = `<div class="error-msg">${msg}</div>`;
-  }
-
-  function haversine(lat1, lon1, lat2, lon2) {
-    const R = 3959, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
-    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-  }
-
-  function buildAddr(t) {
-    const parts = [];
-    if (t['addr:housenumber'] && t['addr:street']) parts.push(`${t['addr:housenumber']} ${t['addr:street']}`);
-    else if (t['addr:street']) parts.push(t['addr:street']);
-    const cs = [t['addr:city'], t['addr:state']].filter(Boolean).join(', ');
-    if (cs) parts.push(cs);
-    if (t['addr:postcode']) parts.push(t['addr:postcode']);
-    return parts.join(', ');
-  }
-
-  function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+// Go!
+init();
 </script>
 
 </body>
